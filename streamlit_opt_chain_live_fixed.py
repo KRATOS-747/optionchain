@@ -27,11 +27,19 @@ import os
 # --------------------------
 # Config - change paths if needed
 # --------------------------
-ACCESS_TOKEN_FILE = Path("/Users/akshayjoshi/Documents/FINCODE/access_token.txt")
-HISTORY_FILE = Path("/Users/akshayjoshi/Documents/FINCODE/nifty_option_chain_history.jsonl")
-LATEST_FILE = Path("/Users/akshayjoshi/Documents/FINCODE/nifty_option_chain_latest.json")
-BASE = "https://api.upstox.com"   # change to sandbox URL if you use sandbox
+from pathlib import Path
+
+# Use a repo-local data directory (works on Streamlit Cloud and most hosts)
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "data"
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+ACCESS_TOKEN_FILE = DATA_DIR / "access_token.txt"   # local fallback (dev only)
+HISTORY_FILE      = DATA_DIR / "nifty_option_chain_history.jsonl"
+LATEST_FILE       = DATA_DIR / "nifty_option_chain_latest.json"
+BASE = "https://api.upstox.com"
 DEFAULT_INSTRUMENT_KEY = "NSE_INDEX|Nifty 50"
+
 
 # --------------------------
 # Utility functions
